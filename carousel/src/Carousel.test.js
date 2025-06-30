@@ -64,3 +64,28 @@ it("moves backward when you click on the left arrow", () => {
     container.querySelector('img[alt="testing image 1"]')
   ).toBeInTheDocument();
 });
+
+it("hides the left arrow on the first image", () => {
+  const { container } = render(
+    <Carousel photos={TEST_IMAGES} title="testing arrows" />
+  );
+
+  const leftArrow = container.querySelector(".bi-arrow-left-circle");
+  expect(leftArrow).not.toBeVisible();
+});
+
+it("hides the right arrow on the last image", () => {
+  const { container } = render(
+    <Carousel photos={TEST_IMAGES} title="testing arrows" />
+  );
+
+  const rightArrow = container.querySelector(".bi-arrow-right-circle");
+
+  // Move to last image
+  fireEvent.click(rightArrow);
+  fireEvent.click(rightArrow); // Now on 3rd image (index 2)
+
+  expect(
+    container.querySelector(".bi-arrow-right-circle")
+  ).not.toBeVisible(); 
+});
