@@ -29,3 +29,14 @@ it("works when you click on the right arrow", function() {
     container.querySelector('img[alt="testing image 2"]')
   ).toBeInTheDocument();
 });
+
+it("renders without crashing", () => {
+  render(<Carousel photos={TEST_IMAGES} title="images for testing" />);
+});
+
+it("matches snapshot", () => {
+  const { asFragment } = render(
+    <Carousel photos={TEST_IMAGES} title="images for testing" />
+  );
+  expect(asFragment()).toMatchSnapshot();
+});
