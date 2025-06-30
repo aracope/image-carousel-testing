@@ -40,3 +40,27 @@ it("matches snapshot", () => {
   );
   expect(asFragment()).toMatchSnapshot();
 });
+
+it("moves backward when you click on the left arrow", () => {
+  const { container } = render(
+    <Carousel photos={TEST_IMAGES} title="images for testing" />
+  );
+
+  // Move forward to second image
+  const rightArrow = container.querySelector(".bi-arrow-right-circle");
+  fireEvent.click(rightArrow);
+
+  // Sanity check: second image should show
+  expect(
+    container.querySelector('img[alt="testing image 2"]')
+  ).toBeInTheDocument();
+
+  // Click left arrow
+  const leftArrow = container.querySelector(".bi-arrow-left-circle");
+  fireEvent.click(leftArrow);
+
+  // Now we expect to be back on first image
+  expect(
+    container.querySelector('img[alt="testing image 1"]')
+  ).toBeInTheDocument();
+});
